@@ -1,0 +1,35 @@
+Que-> Search an element in a matrix. 
+Input -> k = 29;
+Output-> Find at 2,1
+class Program
+    {
+        static void Main(string[] args)
+        {
+            int[,] a = { { 10, 20, 30, 40 },
+                      { 15, 25, 35, 45 },
+                      { 27, 29, 37, 48 },
+                      { 32, 33, 39, 50 } };
+            int k = 29;
+            int n = a.GetLength(0);
+            SearchElement(a, n, k);
+        }
+        static void SearchElement(int[,] a, int n, int k)
+        {
+            int i = 0;
+            int j = n - 1;
+            while (i < n && j >= 0)
+            {
+                if (a[i, j] == k)
+                {
+                    Console.Write("Found element at (" + i + "," + j +")");
+                    return;
+                }
+                if (a[i, j] > k)
+                    j--;
+                else
+                    i++;
+            }
+            Console.Write("Searched element not found in the given matrix");
+            return;
+        }
+    }
