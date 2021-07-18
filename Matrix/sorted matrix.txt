@@ -1,0 +1,55 @@
+Que-> Print elements in sorted order using row-column wise sorted matrix
+Output-> Elements of matrix in sorted order
+10,15,20,25,27,29,30,32,33,35,37,39,40,45,48,50
+ Young Tableau Approach
+-------------------------------------------------------------------------
+class Program
+    {
+        static int N = 4;
+        static int Infinity = int.MaxValue;
+        static void Main(string[] args)
+        {
+            int[,] arr = {{10,20,30,40},
+                              {15,25,35,45},
+                              {27,29,37,48},
+                              {32,33,39,50}};
+            PrintSorted(arr);
+        }
+        static void PrintSorted(int[,] arr)
+        {
+            Console.WriteLine("Elements of matrix in sorted order n");
+            for (int i = 0; i < N * N; i++)
+            {
+                Console.Write(extractMin(arr) + ",");
+            }
+        }
+        static int extractMin(int[,] arr)
+        {
+            int ret = arr[0, 0];
+            arr[0, 0] = Infinity;
+            Youngify(arr, 0, 0);
+            return ret;
+        }
+        static void Youngify(int[,] arr, int i, int j)
+        {
+            int downVal = (i + 1 < N ? arr[i + 1, j] : Infinity);
+            int rightVal = (j + 1 < N ? arr[i, j + 1] : Infinity);
+
+            if (downVal == Infinity && rightVal == Infinity)
+            {
+                return;
+            }
+            if (downVal < rightVal)
+            {
+                arr[i, j] = downVal;
+                arr[i + 1, j] = Infinity;
+                Youngify(arr, i + 1, j);
+            }
+            else 
+            {
+                arr[i, j] = rightVal;
+                arr[i, j + 1] = Infinity;
+                Youngify(arr, i, j + 1);
+            }
+        }
+}
