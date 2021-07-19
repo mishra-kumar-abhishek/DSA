@@ -1,0 +1,77 @@
+Que-> Maximum size rectangle binary sub-matrix with all 1s
+Output -> Maximum rectangle area is 8
+Time Complexity: O(R x C). 
+Only one traversal of the matrix is required, so the time complexity is O(R X C)
+Space Complexity: O(C). 
+Stack is required to store the columns, so so space complexity is O(C)
+
+class Program
+    {
+        static void Main(string[] args)
+        {
+            int[][] arr = new int[][]
+            {
+                new int [] {0,1,1,0},
+                new int [] {1,1,1,1},
+                new int [] {1,1,1,1},
+                new int [] {1,1,0,0}
+            };
+            Console.WriteLine("Area of maximum rectangle is " + maxRectangle(arr));
+        }
+        static int maxRectangle(int[][] arr)
+        {
+            int row = arr.GetLength(0);
+            int column = arr.GetLength(0);
+            int result = MAH(arr[0], row, column);
+
+            for (int i = 1; i < row; i++)
+            {
+                for (int j = 0; j < column; j++)
+                {
+                    if (arr[i][j] == 1)
+                    {
+                        arr[i][j] += arr[i - 1][j];
+                    }
+                }
+                result = Math.Max(result, MAH(arr[i], row, column));
+            }
+            return result;
+        }
+        static int MAH(int[] arr, int row, int column)
+        {
+            Stack<int> result = new Stack<int>();
+            int top_val;
+            int area=0;
+            int max_area = 0;
+            int i = 0;
+            while (i < column)
+            {
+                if (result.Count == 0 || arr[result.Peek()] <= arr[i])
+                {
+                    result.Push(i++);
+                }
+                else {
+                    top_val = arr[result.Peek()];
+                    result.Pop();
+                    area = top_val * i;
+                    if (result.Count > 0)
+                    {
+                        area = top_val * (i - result.Peek() - 1);
+                    }
+                    max_area = Math.Max(area, max_area);
+                }
+            }
+            while (result.Count > 0)
+            {
+                top_val = arr[result.Peek()];
+                result.Pop();
+                area = top_val * i;
+                if (result.Count > 0)
+                {
+                    area = top_val * (i - result.Peek() - 1);
+                }
+                max_area = Math.Max(area, max_area);
+            }
+            return max_area;
+        }
+    }
