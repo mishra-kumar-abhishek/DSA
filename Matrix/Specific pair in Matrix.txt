@@ -1,0 +1,91 @@
+Que-> Find a specific pair in Matrix.
+Given an n x n matrix mat[n][n] of integers, find the maximum value of mat(c, d) – mat(a, b) over all choices of indexes such that both c > a and d > b.
+Output- 18.
+
+First Approach- Brute Force. Time Complexity O(N^4)
+
+class Program
+    {
+        static void Main(string[] args)
+        {
+            int[,] mat = {{ 1, 2, -1, -4, -20 },
+                      { -8, -3, 4, 2, 1 },
+                      { 3, 8, 6, 1, 3 },
+                      { -4, -1, 1, 7, -6 },
+                      { 0, -4, 10, -5, 1 }};
+            int N = 5;
+            Console.Write("Maximum value is " + FindMaxValue(mat, N));
+        }
+        static int FindMaxValue(int[,] mat,int N)
+        {
+            int maxVal = int.MinValue;
+
+            for (int a = 0; a < N-1; a++)
+            {
+                for (int b = 0; b < N-1; b++)
+                {
+                    for (int c = a+1; c < N; c++)
+                    {
+                        for (int d = b+1; d < N; d++)
+                        {
+                            if (mat[c, d] - mat[a, b] > maxVal)
+                            {
+                                maxVal = mat[c, d] - mat[a, b];
+                            }
+                        }
+                    }
+                }
+            }
+            return maxVal;
+        }
+    }
+------------------------------------------------------------------------------
+2nd Approach- Efficient Approach used extra space
+------------------------------------------------------------------------------
+class Program
+    {
+        static void Main(string[] args)
+        {
+            int[,] mat = {{ 1, 2, -1, -4, -20 },
+                      { -8, -3, 4, 2, 1 },
+                      { 3, 8, 6, 1, 3 },
+                      { -4, -1, 1, 7, -6 },
+                      { 0, -4, 10, -5, 1 }};
+            int N = 5;
+            Console.Write("Maximum value is " + FindMaxValue(mat, N));
+        }
+        static int FindMaxValue(int[,] mat, int N)
+        {
+            int maxVal = int.MinValue;
+
+            int[,] maxarr = new int[N, N];
+            maxarr[N - 1, N - 1] = mat[N - 1, N - 1];
+
+            int maxv = mat[N - 1, N - 1];
+            for (int j = N - 2; j >= 0; j--)
+            {
+                if (mat[N - 1, j] > maxv)
+                    maxv = mat[N - 1, j];
+                maxarr[N - 1, j] = maxv;
+            }
+            maxv = mat[N - 1, N - 1];
+            for (int i = N - 2; i >= 0; i--)
+            {
+                if (mat[i, N - 1] > maxv)
+                    maxv = mat[i, N - 1];
+                maxarr[i, N - 1] = maxv;
+            }
+
+            for (int i = N - 2; i >= 0; i--)
+            {
+                for (int j = N - 2; j >= 0; j--)
+                {
+                    if (maxarr[i + 1, j + 1] - mat[i, j] > maxVal)
+                        maxVal = maxarr[i + 1, j + 1] - mat[i, j];
+
+                    maxarr[i, j] = Math.Max(mat[i, j], Math.Max(maxarr[i, j + 1], maxarr[i + 1, j]));
+                }
+            }
+            return maxVal;
+        }
+    }
