@@ -1,0 +1,48 @@
+Que-> Common elements in all rows of a given matrix.
+Output- 8,1
+TC O(m*n)
+class Program
+    {
+        static void Main(string[] args)
+        {
+            int[,] arr = {{1, 2, 1, 4, 8},
+                  {3, 7, 8, 5, 1},
+                  {8, 7, 7, 3, 1},
+                  {8, 1, 2, 7, 9}};
+            PrintCommonElement(arr);
+        }
+        static void PrintCommonElement(int[,] arr)
+        {
+            int M = 4;
+            int N = 5;
+            Dictionary<int, int> map = new Dictionary<int, int>();
+            for (int j = 0; j < N; j++)
+            {
+                if(!map.ContainsKey(arr[0,j]))
+                {
+                    map.Add(arr[0,j],1);
+                }
+            }
+            for (int i = 1; i < M; i++)
+            {
+                for (int j = 0; j < N; j++)
+                {
+                    if (map.ContainsKey(arr[i, j]) && map[arr[i, j]] != 0 && map[arr[i, j]] == i)
+                    {
+                        if (map.ContainsKey(arr[i, j]))
+                        {
+                            int v = map[arr[i, j]];
+                            map.Remove(arr[i, j]);
+                            map.Add(arr[i, j], i + 1);
+                        }
+                        else
+                        {
+                            map.Add(arr[i, j], i + 1);
+                        }
+                        if (i == M - 1)
+                            Console.Write(arr[i, j] + " ");
+                    }
+                }
+            }
+        }
+    }
