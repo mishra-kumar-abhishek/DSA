@@ -1,0 +1,24 @@
+Que-> Reverse char string;
+Input: { 'H', 'E', 'L', 'L', 'O' }
+output : { 'O', 'L', 'L', 'E', 'H' }
+
+class Program
+    {
+        static void Main(string[] args)
+        {
+            char[] myCharArray = new char[] { 'H', 'E', 'L', 'L', 'O' };
+            int left = 0;
+            int right = myCharArray.Length - 1;
+            while (left < right)
+            {
+                char temp = myCharArray[left];
+                myCharArray[left] = myCharArray[right];
+                left++;
+                myCharArray[right] = temp;
+                right--;
+            }
+            for (int i = 0; i < myCharArray.Length; i++)
+            {
+                Console.Write(myCharArray[i] + " ");
+            }
+        }
