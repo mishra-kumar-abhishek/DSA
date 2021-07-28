@@ -1,0 +1,61 @@
+Que-> Print Duplicate String.
+Method 1->  Using Hash
+TC O(n), SC O(No_OF_SIZE) 
+class Program
+    {
+        static int No_Of_Char = 256;
+        static void Main(string[] args)
+        {
+            string str = "geeksforgeeks";
+            PrintDuplicate(str);
+        }
+        static void PrintDuplicate(string str)
+        {
+            int[] count = new int[No_Of_Char];
+            FillCount(str, count);
+
+            for (int i = 0; i < No_Of_Char; i++)
+            {
+                if (count[i] > 1)
+                    Console.WriteLine((char)i + ", Count = " + count[i]);
+            }
+        }
+        static void FillCount(string str, int[] count)
+        {
+            for (int i = 0; i < str.Length; i++)
+            {
+                count[str[i]]++;
+            }
+        }
+}
+---------------------------------------------------------------------------------------------
+Method 2- Using Map
+TC- O(N log N), where N = length of the string passed and it generally takes logN time for an element insertion in a map.
+ 
+SC- O(K), where K = size of the map (0<=K<=input_string_length).
+class Program
+    {
+        static void Main(string[] args)
+        {
+            string str = "geeksforgeeks";
+            PrintDuplicate(str);
+        }
+        static void PrintDuplicate(string str)
+        {
+            Dictionary<char, int> count = new Dictionary<char, int>();
+
+            for (int i = 0; i < str.Length; i++)
+			{
+                if (count.ContainsKey(str[i]))
+                    count[str[i]]++;
+                else
+                    count[str[i]] = 1;
+			}
+            foreach (var item in count)
+            {
+                if (item.Value > 1)
+                    Console.WriteLine(item.Key + ", Count = " + item.Value);
+            }
+            
+        }
+}
