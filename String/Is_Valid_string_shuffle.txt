@@ -1,0 +1,53 @@
+Que-> Write a Program to check whether a string is a valid shuffle of two strings or not?
+
+
+class Program
+    {
+        static void Main(string[] args)
+        {
+            string str1 = "XY";
+            string str2 = "12";
+            string[] result = { "Y1X2", "X21Y", "Y1XX2" };
+
+            for (int i = 0; i < result.Length; i++)
+            {
+                if (CheckLength(str1, str2, result[i]) && ShuffleCheck(str1, str2, result[i]))
+                    Console.WriteLine(result[i] + " is a valid shuffle of " + str1 + "and" + str2);
+                else
+                    Console.WriteLine(result[i] + " is a not valid shuffle of " + str1 + "and" + str2);
+            }
+        }
+        static bool CheckLength(string str1,string str2,string result)
+        {
+            return ((str1 + str2).Length == result.Length);
+        }
+        static bool ShuffleCheck(string str1, string str2, string result)
+        {
+            str1 = sortString(str1);
+            str2 = sortString(str2);
+            result = sortString(result);
+
+            int i = 0, j = 0, k = 0;
+            while (k != result.Length)
+            {
+                if (i < str1.Length && str1[i] == result[k])
+                    i++;
+                else if (j < str2.Length && str2[j] == result[k])
+                    j++;
+                else
+                    return false;
+                
+                k++;
+            }
+            if (i < str1.Length && j < str2.Length)
+                return false;
+            
+            return true;
+        }
+        static string sortString(string str)
+        {
+            char[] charArray = str.ToCharArray();
+            Array.Sort(charArray);
+            str = new String(charArray);
+            return str;
+        }
