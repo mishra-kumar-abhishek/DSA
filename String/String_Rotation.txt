@@ -1,0 +1,21 @@
+Que-> String Rotation.
+Input- S1 = "ABCD"; S2 = "CDAB"
+Output-> True
+
+class Program
+    {
+        static void Main(string[] args)
+        {
+            string str1 = "ABCD";
+            string str2 = "CDAB";
+
+            if(AreRotation(str1,str2))
+                Console.Write("Strings are rotation of each other");
+            else
+                Console.Write("Strings are not rotation of each other");
+        }
+        static bool AreRotation(string str1, string str2)
+        {
+            return (str1.Length == str2.Length) && ((str1 + str1).IndexOf(str2) != -1);
+        }
+}
