@@ -1,0 +1,40 @@
+Que-> Print all the permutations of the given string
+
+class Program
+    {
+        static int count = 0;
+        static void Main(string[] args)
+        {
+            string str = "absg";
+            getPermutation(str, 0);
+            Console.WriteLine("Total number is permutation is " + count);
+            //Console.WriteLine("Before swap " + str);
+            //string swapstr = swap(str, 0, 1);
+            //Console.WriteLine("After swap " + swapstr);
+        }
+        public static void getPermutation(string str, int index)
+        {
+            if (index >= str.Length)
+            {
+                Console.WriteLine(str);
+                count++;
+                return;
+            }
+            for (int i = index; i < str.Length; i++)
+            {
+                str = swap(str, index, i);
+                getPermutation(str, index + 1);
+                //backtrack
+                str = swap(str, index, i);
+            }
+
+        }
+        public static string swap(string str, int i, int j)
+        {
+            char[] ch = str.ToCharArray();
+            char tempch = ch[i];
+            ch[i] = ch[j];
+            ch[j] = tempch;
+            return new String(ch);
+        }
+}
