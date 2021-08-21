@@ -1,0 +1,48 @@
+Que-> Balanced Parenthesis problem.
+
+class Program
+    {
+        static void Main(string[] args)
+        {
+            char[] exp = { '{', '(', ')', '}', '[', ']' };
+            if (AreBracketsBalanced(exp))
+                Console.Write("Balanced Bracket");
+            else
+                Console.Write("Not Balanced Bracket");
+        }
+        static bool AreBracketsBalanced(char[] exp)
+        {
+            Stack<char> st = new Stack<char>();
+            for (int i = 0; i < exp.Length; i++)
+            {
+                if (exp[i] == '{' || exp[i] == '[' || exp[i] == '(')
+                    st.Push(exp[i]);
+
+                if (exp[i] == '}' || exp[i] == ']' || exp[i] == ')')
+                {
+                    if (st.Count == 0)
+                        return false;
+                    else
+                    {
+                        if (!IsMatchingPair(st.Pop(), exp[i]))
+                            return false;
+                    }
+                }
+            }
+            if (st.Count == 0)
+                return true;
+            else
+                return false;
+        }
+        static bool IsMatchingPair(char char1, char char2)
+        {
+            if (char1 == '{' && char2 == '}')
+                return true;
+            else if (char1 == '[' && char2 == ']')
+                return true;
+            else if (char1 == '(' && char2 == ')')
+                return true;
+            else
+                return false;
+        }
+}
