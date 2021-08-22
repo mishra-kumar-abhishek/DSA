@@ -1,0 +1,83 @@
+Que-> Word Break Problem.
+Recursion Method
+---------------------------------
+class Program
+    {
+        private static HashSet<String> dictionary = new HashSet<String>();
+        static void Main(string[] args)
+        {
+            String[] temp_dictionary = {"mobile","samsung","sam","sung",
+                            "man","mango","icecream","and",
+                            "go","i","like","ice","cream"};
+            foreach (string item in temp_dictionary)
+            {
+                dictionary.Add(item);
+            }
+            Console.WriteLine(wordBreak("ilikesamsung"));
+            Console.WriteLine(wordBreak("iiiiiiii"));
+            Console.WriteLine(wordBreak(""));
+            Console.WriteLine(wordBreak("ilikelikeimangoiii"));
+            Console.WriteLine(wordBreak("samsungandmango"));
+            Console.WriteLine(wordBreak("samsungandmangok"));
+        }
+        public static Boolean wordBreak(String word)
+        {
+            int size = word.Length;
+
+            if (size == 0)
+                return true;
+
+            for (int i = 1; i <= size; i++)
+            {
+                if (dictionary.Contains(word.Substring(0, i)) &&
+                        wordBreak(word.Substring(i, size-i)))
+                    return true;
+            }
+            return false;
+        }
+}
+-------------------------------------------------------------------------------------
+Recursion with backtracking
+-----------------------------------------------------------------------------------------
+class Program
+    {
+        private static HashSet<String> dictionary = new HashSet<String>();
+        static void Main(string[] args)
+        {
+            string str1 = "ilovesamsung";
+            string str2 = "samsungandmangok";
+            int n1 = str1.Length;
+            int n2 = str2.Length;
+
+            List<string> dist = new List<string>{"mobile","samsung","sam","sung",
+                                      "man","mango", "icecream","and",
+                                      "go","i","love","ice","cream"};
+            Console.WriteLine("First Test Case :");
+            wordBreak(n1, dist, str1);
+            Console.WriteLine("Second Test Case :");
+            wordBreak(n2, dist, str2);
+        }
+        static void wordBreak(int n, List<string> dist, string s)
+        {
+            string ans = "";
+            WordBreakUtil(n, dist, s, ans);
+        }
+        static void WordBreakUtil(int n, List<string> dist, string s, string ans)
+        {
+            for (int i = 1; i <= n; i++)
+            {
+                string prefix = s.Substring(0, i);
+
+                if (dist.Contains(prefix))
+                {
+                    if (i == n)
+                    {
+                        ans += prefix;
+                        Console.WriteLine(ans);
+                        return;
+                    }
+                    WordBreakUtil(n - i, dist, s.Substring(i, n-i), ans + prefix + " ");
+                }
+            }
+        }
+}
