@@ -1,0 +1,79 @@
+Que-> Minimum number of bracket reversals needed to make an expression balanced.
+Method 1
+---------------------------------------------------------------------------------
+class Program
+    {
+        static void Main(string[] args)
+        {
+            string exp = "}}{{";
+            Console.WriteLine(CountMinReversal(exp));
+        }
+        static int CountMinReversal(string exp)
+        {
+            int len = exp.Length;
+            if (len % 2 != 0)
+                return -1;
+            Stack<char> s = new Stack<char>();
+            for (int i = 0; i < len; i++)
+            {
+                char c = exp[i];
+                if (c == '}' && s.Count > 0)
+                {
+                    if (s.Peek() == '{')
+                    {
+                        s.Pop();
+                    }
+                    else
+                    {
+                        s.Push(c);
+                    }
+                }
+                else
+                {
+                    s.Push(c);
+                }
+            }
+            int reducedLength = s.Count;
+            int n = 0;
+            while (s.Count > 0 && s.Peek() == '{')
+            {
+                s.Pop();
+                n++;
+            }
+            return (reducedLength / 2 + n % 2);
+        }
+}
+-------------------------------------------------------------------------------------------
+Method-2
+-----------------------------------------------------------------------------------------
+class Program
+    {
+        static void Main(string[] args)
+        {
+            string exp = "}}{{";
+            Console.WriteLine(CountMinReversal(exp));
+        }
+        static int CountMinReversal(string exp)
+        {
+            int len = exp.Length;
+            if (len % 2 != 0)
+                return -1;
+
+            int ans;
+            int open = 0;
+            int close = 0;
+            for (int i = 0; i < len; i++)
+            {
+                char c = exp[i];
+                if (c == '{')
+                    open++;
+                else
+                    if (open == 0)
+                        close++;
+                    else
+                        open--;
+            }
+            ans = (int)(Math.Ceiling((0.0 + open) / 2 + Math.Ceiling(0.0 + close) / 2));
+            return ans;
+        }
+}
