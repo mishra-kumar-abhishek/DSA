@@ -1,0 +1,48 @@
+Que-> Count of number of given string in 2D character array
+
+class Program
+    {
+        static void Main(string[] args)
+        {
+            char[,] ch = new char[6, 6]{
+                                            {'D','D','D','G','D','D'},
+                                            {'B','B','D','E','B','S'},
+                                            {'B','S','K','E','B','K'},
+                                            {'D','D','D','D','D','E'},
+                                            {'D','D','D','D','D','E'},
+                                            {'D','D','D','D','D','G'}
+                                       };
+            string str = "GEEKS";
+            int n = str.Length;
+            int ans = 0;
+            for (int i = 0; i < ch.GetLength(0); i++)
+            {
+                for (int j = 0; j < ch.GetLength(1); j++)
+                {
+                    ans += CountNumber(i, j, str, n, ch, 0);
+                }
+            }
+            Console.Write(ans);
+        }
+        static int CountNumber(int row, int col, string str, int n, char[,] ch, int str_index)
+        {
+            int found = 0;
+            if (row >= 0 && col >= 0 && row < 6 && col < 6 && str[str_index] == ch[row, col])
+            {
+                char temp = ch[row, col];
+                ch[row, col] = '0';
+                str_index++;
+                if (str_index == n)
+                    found = 1;
+                else
+                {
+                    found += CountNumber(row + 1, col, str, n, ch, str_index);
+                    found += CountNumber(row - 1, col, str, n, ch, str_index);
+                    found += CountNumber(row, col + 1, str, n, ch, str_index);
+                    found += CountNumber(row, col - 1, str, n, ch, str_index);
+                }
+                ch[row, col] = temp; // Backtrack
+            }
+            return found;
+        }
+}
