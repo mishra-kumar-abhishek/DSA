@@ -1,0 +1,58 @@
+Que> Search a Word in a 2D Grid of characters.
+
+class Program
+    {
+        static void Main(string[] args)
+        {
+            char[,] ch = {{'G','E','E','K','S','F','O','R','G','E','E','K','S'},
+                             {'G','E','E','K','S','Q','U','I','Z','G','E','E','K'},
+                             {'I', 'D', 'E', 'Q', 'A', 'P', 'R','A', 'C', 'T', 'I', 'C', 'E' }
+                          };
+            PatternSearch(ch, "GEEKS");
+            Console.WriteLine();
+            PatternSearch(ch, "EEE");
+        }
+        static void PatternSearch(char[,] ch, string word)
+        {
+            for (int row = 0; row < ch.GetLength(0); row++)
+            {
+                for (int col = 0; col < ch.GetLength(1); col++)
+                {
+                    if (Search2D(ch, row, col, word))
+                    {
+                        Console.WriteLine("Patter found at " + row + ", " + col);
+                    }
+                }
+            }
+        }
+        static bool Search2D(char[,] ch, int row, int col, string word)
+        {
+            int R = ch.GetLength(0);
+            int C = ch.GetLength(1);
+
+            int[] x = { -1, -1, -1, 0, 0, 1, 1, 1 };
+            int[] y = { -1, 0, 1, -1, 1, -1, 0, 1 };
+
+            if (ch[row, col] != word[0])
+                return false;
+
+            int len = word.Length;
+
+            for (int dir = 0; dir < 8; dir++)
+            {
+                int k, rd = row + x[dir], cd = col + y[dir];
+                for (k = 1; k < len; k++)
+                {
+                    if (rd >= R || rd < 0 || cd >= C || cd < 0)
+                        break;
+                    if (ch[rd, cd] != word[k])
+                        break;
+                    rd += x[dir];
+                    cd += y[dir];
+                }
+                if (k == len)
+                    return true;
+            }
+            return false;
+        }
+}
