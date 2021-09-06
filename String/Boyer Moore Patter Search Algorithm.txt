@@ -1,0 +1,60 @@
+Que-> Boyer Moore Algorithm for Pattern Searching.
+Input : text = "ABAAABC";
+Pat : "ABC";
+Output = Patter found at 4
+--------------------------------------------------------------------------
+1) Bad Character Heuristic 
+----------------------------------------------------------------------------
+class Program
+    {
+        static int No_Of_Chars = 256;
+
+        static void Main(string[] args)
+        {
+            char[] txt = "ABAAABCD".ToCharArray();
+            char[] pat = "ABC".ToCharArray();
+            Search(txt, pat);
+        }
+        static void Search(char[] txt, char[] pat)
+        {
+            int n = txt.Length;
+            int m = pat.Length;
+            // Initialize badchar array
+            int[] badchar = new int[No_Of_Chars];
+            // Fill badchar array by preprocessing function BadCharHeuristic
+            BadCharHeuristic(pat, m, badchar);
+            int s = 0; // shift of the pattern wrt text
+            while (s <= (n - m))
+            {
+                int j = m - 1;
+                while (j >= 0 && pat[j] == txt[s+j])
+                {
+                    j--;
+                }
+                if (j < 0)
+                {
+                    Console.Write("Pattern Found at : " + s);
+                    s += (s + m < n) ? m - badchar[txt[s + m]] : 1;
+                }
+                else
+                    s += max(1, j - badchar[txt[s + j]]);
+            }
+        }
+        static void BadCharHeuristic(char[] pat, int m, int[] badchar)
+        {
+            int i;
+            for (i = 0; i < No_Of_Chars; i++)
+            {
+                badchar[i] = -1;   // Initialize all occurence as -1
+            }
+            // Fill the actual value of last occurence of char
+            for (i = 0; i < m; i++)
+            {
+                badchar[(int)pat[i]] = i;
+            }
+        }
+        static int max(int a, int b)
+        {
+            return (a > b) ? a : b;
+        }
+}
