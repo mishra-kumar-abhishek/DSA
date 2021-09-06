@@ -1,0 +1,57 @@
+Que-> Converting Roman Numerals to Decimal
+Input str = "IX"
+Output = 9
+
+class Program
+    {
+        static void Main(string[] args)
+        {
+            string str = "MCMIV";
+            Console.Write("Integral form of roman numeral is " + GetIntValue(str));
+        }
+        static int GetIntValue(string str)
+        {
+            int ans = 0;
+            for (int i = 0; i < str.Length; i++)
+            {
+                int v1 = Value(str[i]);
+                if (i + 1 < str.Length)
+                {
+                    int v2 = Value(str[i + 1]);
+                    if (v1 >= v2)
+                    {
+                        ans = ans + v1;
+                    }
+                    else
+                    {
+                        ans = ans + v2 - v1;
+                        i++;
+                    }
+                }
+                else
+                {
+                    ans = ans + v1;
+                    i++;
+                }
+            }
+            return ans;
+        }
+        static int Value(char ch)
+        {
+            if (ch == 'I')
+                return 1;
+            if (ch == 'V')
+                return 5;
+            if (ch == 'X')
+                return 10;
+            if (ch == 'L')
+                return 50;
+            if (ch == 'C')
+                return 100;
+            if (ch == 'D')
+                return 500;
+            if (ch == 'M')
+                return 1000;
+            return -1;
+        }
+}
