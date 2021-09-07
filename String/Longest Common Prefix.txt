@@ -1,0 +1,34 @@
+Que-> Longest common prefix
+Input : {"flower", "flow", "flight"}
+Output : fl
+
+public class Solution {
+static void Main()
+{
+     string [] strs = new {"flower", "flow", "flight"};
+     Console.Write(LongestCommonPrefix(strs));
+}
+    int minLength = int.MaxValue;
+    public string LongestCommonPrefix(string[] strs) {
+        int len = strs.Length;
+        for(int i=0; i < len; i++)
+        {
+            minLength = Math.Min(minLength,strs[i].Length);
+        }
+        for(int i = 0; i< len-1; i++)
+        {
+            FindLength(strs[i],strs[i+1]);
+        }
+        return strs[0].Substring(0,minLength);
+    }
+    public void FindLength(string a, string b)
+    {
+        int n = a.Length;
+        int m = b.Length;
+        int i = 0;
+        while(i < minLength && a[i] == b[i])
+            i++;
+        
+        minLength = Math.Min(i,minLength);
+    }
+}
