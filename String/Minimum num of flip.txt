@@ -1,0 +1,62 @@
+Que-> Minimum number of flip to make binary string alternate?
+Input : "0001010111";
+Output: 2;
+T.C = O(N)  A.C : 0(1)
+-----------------------------------------------------
+First Approach
+------------------------------------------------------
+class Program
+    {
+        static void Main(string[] args)
+        {
+            string str = "0001010111";
+            Console.Write("Minimum Number of flip = " + MinFlipToMakeStringAlternate(str));
+        }
+        static int MinFlipToMakeStringAlternate(string str)
+        {
+            return Math.Min(GetFlipWithStartingChar(str, '0'), GetFlipWithStartingChar(str, '1'));
+        }
+        static int GetFlipWithStartingChar(string str, char expected)
+        {
+            int FlipCount = 0;
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (str[i] != expected)
+                    FlipCount++;
+
+                expected = Flip(expected);
+            }
+            return FlipCount;
+        }
+        static char Flip(char ch)
+        {
+            return (ch == '0') ? '1' : '0';
+        }
+}
+--------------------------------------------------------------------------
+2nd Approach 
+--------------------------------------------------------------------------
+T.C - o(n)
+class Program
+    {
+        static void Main(string[] args)
+        {
+            string str = "0001010111";
+            int len = str.Length;
+            Console.Write("Minimum Number of flip = " + MinimumREplacement(str, len));
+        }
+        static int MinimumREplacement(string str, int len)
+        {
+            int ans = 0;
+            for (int i = 0; i < len; i++)
+            {
+                // If there is 1 at even index position
+                if (i % 2 == 0 && str[i] == '1')
+                    ans++;
+                // If there is 0 at odd index position
+                if (i % 2 == 1 && str[i] == '0')
+                    ans++;
+            }
+            return Math.Min(ans, len - ans);
+        }
+}
