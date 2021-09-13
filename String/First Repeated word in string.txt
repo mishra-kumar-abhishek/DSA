@@ -1,0 +1,37 @@
+Que-> Find the first repeated word in string.
+
+class Program
+    {
+        static void Main(string[] args)
+        {
+            //string str = "Ravi had been saying that he had been there";
+            //string str = "Ravi had been saying that";
+            string str = "he had had he";
+            string[] astr = str.Split(' ');
+            Dictionary<string, int> dic = new Dictionary<string, int>();
+            int count = 0;
+            for (int i = 0; i < astr.Length; i++)
+            {
+                if (dic.ContainsKey(astr[i]))
+                {
+                    int value = dic[astr[i]];   // word exists
+                    dic[astr[i]] = value + 1;
+                }
+                else
+                    // insert new word to set
+                    dic.Add(astr[i], 1);
+            }
+            for (int i = 0; i < astr.Length; i++)
+            {
+                count = dic[astr[i]];
+                if (count > 1)
+                {
+                    Console.Write(astr[i]);
+                    break;
+                }
+            }
+            if (count == 1)
+                Console.WriteLine("Not Repeated");
+            
+        }
+}
